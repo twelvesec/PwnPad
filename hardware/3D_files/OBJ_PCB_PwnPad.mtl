@@ -1,0 +1,130 @@
+newmtl mtl1
+Ka 0.62 0.62 0.36
+Kd 0.62 0.62 0.36
+Ks 0.00 0.00 0.00
+endmtl
+newmtl mtl2
+Ka 0.95 0.76 0.18
+Kd 0.95 0.76 0.18
+Ks 0.76 0.61 0.15
+endmtl
+newmtl mtl3
+Ka 0.18 0.18 0.18
+Kd 0.18 0.18 0.18
+Ks 0.05 0.05 0.05
+endmtl
+newmtl mtl4
+Ka 0.00 0.00 0.00
+Kd 0.00 0.00 0.00
+Ks 0.00 0.00 0.00
+endmtl
+newmtl mtl5
+Ka 0.79 0.82 0.93
+Kd 0.79 0.82 0.93
+Ks 0.40 0.41 0.47
+endmtl
+newmtl mtl6
+Ka 0.79 0.82 0.93
+Kd 0.79 0.82 0.93
+Ks 0.79 0.82 0.93
+endmtl
+newmtl mtl7
+Ka 0.15 0.15 0.15
+Kd 0.15 0.15 0.15
+Ks 0.07 0.07 0.07
+endmtl
+newmtl mtl8
+Ka 0.75 0.75 0.75
+Kd 0.75 0.75 0.75
+Ks 0.38 0.38 0.38
+endmtl
+newmtl mtl9
+Ka 0.80 0.80 0.80
+Kd 0.80 0.80 0.80
+Ks 0.00 0.00 0.00
+endmtl
+newmtl mtl10
+Ka 0.75 0.75 0.75
+Kd 0.75 0.75 0.75
+Ks 0.00 0.00 0.00
+endmtl
+newmtl mtl11
+Ka 1.00 1.00 1.00
+Kd 1.00 1.00 1.00
+Ks 0.00 0.00 0.00
+endmtl
+newmtl mtl12
+Ka 0.77 0.77 0.77
+Kd 0.77 0.77 0.77
+Ks 0.62 0.62 0.62
+endmtl
+newmtl mtl13
+Ka 1.00 0.00 0.00
+Kd 1.00 0.00 0.00
+Ks 0.50 0.00 0.00
+endmtl
+newmtl mtl14
+Ka 0.83 0.67 0.13
+Kd 0.83 0.67 0.13
+Ks 0.67 0.54 0.10
+endmtl
+newmtl mtl15
+Ka 0.80 0.82 0.94
+Kd 0.80 0.82 0.94
+Ks 0.40 0.41 0.47
+endmtl
+newmtl mtl16
+Ka 1.00 1.00 1.00
+Kd 1.00 1.00 1.00
+Ks 0.88 0.88 0.88
+endmtl
+newmtl mtl17
+Ka 0.88 0.71 0.49
+Kd 0.88 0.71 0.49
+Ks 0.04 0.12 0.28
+endmtl
+newmtl mtl18
+Ka 0.82 0.82 0.78
+Kd 0.82 0.82 0.78
+Ks 0.33 0.26 0.17
+endmtl
+newmtl mtl19
+Ka 0.22 0.22 0.22
+Kd 0.22 0.22 0.22
+Ks 0.11 0.11 0.11
+endmtl
+newmtl mtl20
+Ka 0.84 0.40 0.00
+Kd 0.84 0.40 0.00
+Ks 0.42 0.20 0.00
+endmtl
+newmtl mtl21
+Ka 0.65 0.62 0.59
+Kd 0.65 0.62 0.59
+Ks 0.45 0.44 0.41
+endmtl
+newmtl mtl22
+Ka 1.00 1.00 1.00
+Kd 1.00 1.00 1.00
+Ks 0.75 0.75 0.75
+endmtl
+newmtl mtl23
+Ka 0.32 0.32 0.32
+Kd 0.32 0.32 0.32
+Ks 0.75 0.75 0.75
+endmtl
+newmtl mtl24
+Ka 0.75 0.75 0.75
+Kd 0.75 0.75 0.75
+Ks 0.75 0.75 0.75
+endmtl
+newmtl mtl25
+Ka 0.10 0.10 0.10
+Kd 0.10 0.10 0.10
+Ks 0.04 0.04 0.04
+endmtl
+newmtl mtl26
+Ka 0.67 0.67 0.67
+Kd 0.67 0.67 0.67
+Ks 0.47 0.47 0.47
+endmtl

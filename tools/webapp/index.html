@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PwnPad</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f1115;
+      color: #e0e0e0;
+      margin: 40px;
+    }
+
+    .container {
+      background-color: #1a1d24;
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      color: #dd3333;
+      text-align: center;
+    }
+
+    select, input, button {
+      padding: 12px;
+      margin: 10px 0;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+    }
+
+    select, input {
+      background-color: #2a2e38;
+      color: #ffffff;
+    }
+
+    button {
+      background-color: #dd3333;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #dd3300;
+    }
+
+    .result {
+      font-size: 24px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .success {
+      color: #00ff99;
+    }
+
+    .error {
+      color: #ff4c4c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><img src='./src/pwnpad.gif' width="100%" /></h2>
+    <label for="challenge">Choose Challenge:</label>
+    <select id="challenge" onchange="resetResult()">
+      <option value="chal1">Serial Snitch</option>
+      <option value="chal2">Echo Chamber</option>
+      <option value="chal3">Bus Whisperer</option>
+      <option value="chal4">Invisible Wires</option>
+      <option value="chal5">Code Heist</option>
+      <option value="chal6">Hard Leak</option>
+      <option value="chal7">Power Trip</option>
+      <option value="chal8">Glitch Storm</option>
+      <option value="chal9">Clock Spy</option>
+      <option value="chal10">Tempo Leak</option>
+      <option value="chal11">Chaos Chain - Glitchgate</option>
+      <option value="chal12">Chaos Chain - Timebomb</option>
+    </select>
+
+    <label for="flag">Enter Flag:</label>
+    <input type="text" id="flag" placeholder="TS{your_flag_here}" />
+
+    <button onclick="checkFlag()">Submit</button>
+
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    const correctHashes = {
+      "chal1": "d5471f298b42c5cf8160e85e42acf40e", 
+      "chal2": "1771ea4baeb6c13ce0b4c98c0c3450b9", 
+      "chal3": "533b85978dfeb140d884dfa0e3ec994f", 
+      "chal4": "0e088063d3114eb06e9032cb5964560f",
+      "chal5": "d95ea457ce78cb10ae386f77eb9baa78",
+      "chal6": "c28d95b4447872a1de84aac9699f0a75", 
+      "chal7": "f8b5fa32dd4f0bf5f9604700c205e166", 
+      "chal8": "69ecffb697a23be2a06782863f1bd072", 
+      "chal9": "50f9c8575656a92149b4e03443666d81",
+      "chal10": "817cb9e596eec731cbbaf8db74b07ca1",
+      "chal11": "649a602e5e8c9900c5b6ae65d46c1fcd",
+      "chal12": "835a4e79fffcdeb7252540b2b5dbbf14" 
+    };
+
+    function getCookie(name) {
+      const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? decodeURIComponent(match[2]) : null;
+    }
+
+    function setCookie(name, value) {
+      // Session-only cookie (no expiration)
+      document.cookie = `${name}=${encodeURIComponent(value)}; path=/`;
+    }
+
+    function getSolvedChallenges() {
+      const cookie = getCookie('solvedChallenges');
+      return cookie ? cookie.split(',') : [];
+    }
+
+    function addSolvedChallenge(challengeId) {
+      let solved = getSolvedChallenges();
+      if (!solved.includes(challengeId)) {
+        solved.push(challengeId);
+        setCookie('solvedChallenges', solved.join(','));
+        updateDropdownLabels();
+      }
+    }
+
+    function updateDropdownLabels() {
+      const solved = getSolvedChallenges();
+      const select = document.getElementById('challenge');
+      for (let option of select.options) {
+        const baseText = option.value === 'chal1' ? 'Serial Snitch' :
+                         option.value === 'chal2' ? 'Echo Chamber':
+                         option.value === 'chal3' ? 'Bus Whisperer':
+                         option.value === 'chal4' ? 'Invisible Wires':
+                         option.value === 'chal5' ? 'Code Heist':
+                         option.value === 'chal6' ? 'Hard Leak':
+                         option.value === 'chal7' ? 'Power Trip':
+                         option.value === 'chal8' ? 'Glitch Storm':
+                         option.value === 'chal9' ? 'Clock Spy':
+                         option.value === 'chal10' ? 'Tempo Leak':
+                         option.value === 'chal11' ? 'Chaos Chain - Glitchgate':
+                         option.value === 'chal12' ? 'Chaos Chain - Timebomb' : option.textContent;
+        option.textContent = solved.includes(option.value) ? `✅ ${baseText}` : baseText;
+      }
+    }
+
+    function checkFlag() {
+      const selected = document.getElementById('challenge').value;
+      const flag = document.getElementById('flag').value.trim();
+      const hash = CryptoJS.MD5(flag).toString();
+      const resultDiv = document.getElementById('result');
+
+      if (hash === correctHashes[selected]) {
+        resultDiv.innerHTML = '✅ Correct Flag!';
+        resultDiv.className = 'result success';
+        addSolvedChallenge(selected);
+      } else {
+        resultDiv.innerHTML = '❌ Wrong Flag!';
+        resultDiv.className = 'result error';
+      }
+    }
+
+    function resetResult() {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = '';
+      resultDiv.className = 'result';
+      document.getElementById('flag').value = '';
+    }
+
+    // Initialize on load
+    updateDropdownLabels();
+  </script>
+</body>
+</html>
