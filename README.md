@@ -1,20 +1,19 @@
-![[./docs/img/pwnpad.gif]]
+![img](https://github.com/twelvesec/PwnPad/blob/main/docs/img/pwnpad.gif?raw=true)
 # PwnPad: A Hardware Hacking Learning Platform
 
-![[./docs/img/pwnpad-board.png|500]]
 
 ## 🎯 Goals
 
-**PwnPad** was created for anyone curious about hardware hacking — no prior experience required. The project is designed to be as affordable and accessible as possible: you can build the entire setup for **under \$20**, and complete all existing challenges using about **\$50 worth of basic tools**.
+**PwnPad** was created for anyone curious about hardware hacking, no prior experience required. The project is designed to be as affordable and accessible as possible: you can build the entire setup for **under \$20**, and complete all existing challenges using about **\$50 worth of basic tools**.
 
-Through hands-on learning, PwnPad guides you from the very beginning — including PCB manufacturing, soldering, and firmware flashing — all the way to advanced exploitation techniques. You'll gain practical experience with:
+Through hands-on learning, PwnPad guides you from the very beginning — including PCB manufacturing, soldering, and firmware extraction, all the way to advanced exploitation techniques. You'll gain practical experience with:
 
 * Serial communication protocols like **UART**, **SPI**, and **I2C**
 * **Firmware extraction** via ISP and EEPROM dumps
 * Building your own **ISP programmer**
 * Performing **voltage fault injections** and **timing-based side-channel attacks**
 
-A key feature of PwnPad is its **challenge selector via jumper pins** — no need to reflash the device when switching between challenges. Simply set the pins to load a different challenge from the pre-flashed firmware.
+A key feature of PwnPad is its **challenge selector via jumper pins**, no need to reflash the device when switching between challenges. Simply set the pins to load a different challenge from the pre-flashed firmware.
 
 PwnPad aims to bridge the gap between theory and practice by offering a structured, hands-on path into the world of embedded systems and hardware security.
 
@@ -72,7 +71,7 @@ To get started, simply configure the jumpers as described in the challenge instr
 
 For instance, to play the challenge "Serial Snitch", go to challenges/Serial Snitch.md and set the jumper pins as shown in the image below:
 
-![[./docs/img/modeselect-example.png|250]]
+![img](https://github.com/twelvesec/PwnPad/blob/main/docs/img/modeselect-example.png?raw=true)
 
 ````md
 # **Challenge 1: "Serial Snitch"**
@@ -101,7 +100,7 @@ bash ./tools/webapp/start.sh
 ```
 Then open your browser and navigate to: `http://127.0.0.1:12530`
 
-![[./docs/img/submitpage.png]]
+![img](https://github.com/twelvesec/PwnPad/blob/main/docs/img/submitpage.png?raw=true)
 
 There you can submit your flags and monitor your progress.
 
@@ -150,3 +149,7 @@ Let’s build awesome open-source hardware hacking content together!
 ## 🪪 Licensing
 
 This project is licensed under the **GNU General Public License v3.0**. See [LICENSE](LICENSE) for full text.
+
+---
+
+![img](https://github.com/twelvesec/PwnPad/blob/main/docs/img/pwnpad-board.png?raw=true)
