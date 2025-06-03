@@ -2,13 +2,16 @@
 # PwnPad: A Hardware Hacking Learning Platform
 
 
+ ![license-shield](https://img.shields.io/github/license/twelvesec/PwnPad) ![stars-shield](https://img.shields.io/github/stars/twelvesec/PwnPad) ![contributors-shield](https://img.shields.io/github/contributors/twelvesec/PwnPad) ![Static Badge](https://img.shields.io/badge/HTML5-blue) ![Static Badge](https://img.shields.io/badge/CSS3-green) ![Static Badge](https://img.shields.io/badge/JavaScript-red) ![Static Badge](https://img.shields.io/badge/Arduino-blue)
+
+
 ## 🎯 Goals
 
 **PwnPad** was created for anyone curious about hardware hacking, no prior experience required. The project is designed to be as affordable and accessible as possible: you can build the entire setup for **under \$20**, and complete all existing challenges using about **\$50 worth of basic tools**.
 
 Through hands-on learning, PwnPad guides you from the very beginning — including PCB manufacturing, soldering, and firmware extraction, all the way to advanced exploitation techniques. You'll gain practical experience with:
 
-* Serial communication protocols like **UART**, **SPI**, and **I2C**
+* Serial communication protocols like **UART**, **SPI**, and **I<sup>2</sup>C**
 * **Firmware extraction** via ISP and EEPROM dumps
 * Building your own **ISP programmer**
 * Performing **voltage fault injections** and **timing-based side-channel attacks**
@@ -35,16 +38,16 @@ PwnPad aims to bridge the gap between theory and practice by offering a structur
 
 >⚠️ **Important:**  
 >To consider a challenge complete, you must fulfill the goals outlined in the corresponding folder inside `challenges/`.  
->Except for **Code Heist** and **Hard Leak**, **all flags must be retrieved through a serial interface** (UART or I2C).
+>Except for **Code Heist** and **Hard Leak**, **all flags must be retrieved through a serial interface** (UART or I<sup>2</sup>C).
 
 |#|Name|Topics|Description|
 |---|---|---|---|
 |1|Serial Snitch|`#UART`|Intercept and decode UART communication.|
 |2|Echo Chamber|`#UART`|Intercept and decode UART communication, with security through obscurity.|
-|3|Bus Whisperer|`#I2C`|Spy on I2C traffic to extract secrets.|
-|4|Invisible Wires|`#I2C`|Attack I2C when slave devices are missing.|
-|5|Code Heist|`#SPI` `#ISP` `Flash` `#UART`|Dump and analyze firmware from flash.|
-|6|Hard Leak|`#SPI` `#ISP` `EEPROM`|Extract data from the internal EEPROM.|
+|3|Bus Whisperer|`#I2C`|Spy on I<sup>2</sup>C traffic to extract secrets.|
+|4|Invisible Wires|`#I2C`|Attack I<sup>2</sup>C when slave devices are missing.|
+|5|Code Heist|`#SPI` `#ISP` `#Flash` `#UART`|Dump and analyze firmware from flash.|
+|6|Hard Leak|`#SPI` `#ISP` `#EEPROM`|Extract data from the internal EEPROM.|
 |7|Power Trip|`#FaultInjection` `#UART`|Use glitching to bypass dead code statements.|
 |8|Glitch Storm|`#FaultInjection` `#UART`|Use glitching to bypass password verification.|
 |9|Clock Spy|`#SideChannel` `#UART`|Leak secrets using timing variations.|
@@ -153,3 +156,5 @@ This project is licensed under the **GNU General Public License v3.0**. See [LIC
 ---
 
 ![img](https://github.com/twelvesec/PwnPad/blob/main/docs/img/pwnpad-board.png?raw=true)
+
+------------------------------------ ***Created by Georgios Roumeliotis from TwelveSec*** ------------------------------------
