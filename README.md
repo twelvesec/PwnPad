@@ -148,13 +148,32 @@ Make sure your challenge is self-contained, documented, and has clear **goals** 
 
 Let’s build awesome open-source hardware hacking content together!
 
+---
+## 🛣️ Roadmap
 
+### 🧠 Software Enhancements
+- [ ] Introduce a Simple Power Analysis (SPA) challenge  
+- [ ] Introduce a Differential Power Analysis (DPA) challenge  
+
+### 🔧 Hardware Upgrades
+- [ ] Simplify the Fault Injection interface using DIP switches to disable capacitors  
+- [ ] Implement an interface for external module plug-ins  
+- [ ] Develop new add-on modules (fully backward-compatible with existing PwnPad versions):
+  - [ ] External Storage Module  
+  - [ ] BLE (Bluetooth Low Energy) Module  
+  - [ ] RF (Radio Frequency) Module
+
+---
 ## 🪪 Licensing
 
 This project is licensed under the **GNU General Public License v3.0**. See [LICENSE](LICENSE) for full text.
 
 ---
 
-![img](https://github.com/twelvesec/PwnPad/blob/main/docs/img/pwnpad-board.png?raw=true)
+<div align="center">
+  <img src="https://github.com/twelvesec/PwnPad/blob/main/docs/img/pwnpad-board.png?raw=true" alt="img">
+</div>
 
------------------------------------- ***Created by Georgios Roumeliotis from TwelveSec*** ------------------------------------
+---
+
+<p align="center"><strong>Created by Georgios Roumeliotis from TwelveSec</strong></p>
