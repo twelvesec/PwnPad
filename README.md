@@ -59,6 +59,12 @@ PwnPad aims to bridge the gap between theory and practice by offering a structur
 
 You can find the complete building instructions in the file: `docs/PwnPad_building_instruction.pdf`
 
+If you're new to soldering or just getting started with hardware hacking, this video will guide you through assembling your PwnPad.
+
+[![Watch the video](https://img.youtube.com/vi/uaiB-Esttt4/0.jpg)](https://www.youtube.com/watch?v=uaiB-Esttt4)
+
+📺 **Click the image above to watch the tutorial on YouTube.**
+
 ### 🔬 Recommended Equipment For Solving The Challenges
 - Multimeter
 - Arduino UNO
