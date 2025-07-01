@@ -103,7 +103,6 @@ Your mission is clear:
 
 If you'd like to track your challenge progress and submit flags, run:
 
-
 ```bash
 bash ./tools/webapp/start.sh
 ```
