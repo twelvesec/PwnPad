@@ -61,6 +61,9 @@ void handheld_challenge_side_channel_timing_attack(void);
 void handheld_challenge_side_channel_timing_attack_v2(void);
 void blackbox_chain_UART_Glitch_Attack(void);
 void blackbox_chain_UART_Timing_Attack(void);
+void handheld_challenge_simple_power_analysis(void);
+void handheld_challenge_swd(void);
+void handheld_challenge_jtag(void);
 // =========>>>> HELPER FUNCTIONS
 void morseMessager(String morse, int speed);
 /*******************************************************************************/ 
@@ -87,26 +90,26 @@ void loop()
 /*************************** FUNCTIONS ******************************/
 
 void initialize(void){
-  pinMode(MOD1, INPUT);
-  pinMode(MOD2, INPUT);
-  pinMode(MOD3, INPUT);
-  pinMode(MOD4, INPUT);
-  pinMode(MOD5, INPUT);
+  pinMode(MOD1, INPUT_PULLUP);
+  pinMode(MOD2, INPUT_PULLUP);
+  pinMode(MOD3, INPUT_PULLUP);
+  pinMode(MOD4, INPUT_PULLUP);
+  pinMode(MOD5, INPUT_PULLUP);
 }
 
 
 int modeReader(void) {
   delay(1000);
   int bits[5];
-  bits[4] = digitalRead(MOD1);
+  bits[4] = !digitalRead(MOD1);
   delay(20);
-  bits[3] = digitalRead(MOD2);
+  bits[3] = !digitalRead(MOD2);
   delay(20);
-  bits[2] = digitalRead(MOD3);
+  bits[2] = !digitalRead(MOD3);
   delay(20);
-  bits[1] = digitalRead(MOD4);
+  bits[1] = !digitalRead(MOD4);
   delay(20);
-  bits[0] = digitalRead(MOD5);
+  bits[0] = !digitalRead(MOD5);
   delay(20);
   int mode = 0;
   for (int i = 0; i < 5; i++) {
@@ -117,7 +120,7 @@ int modeReader(void) {
 
 void challengeSelector(int mode){
   switch(mode){
-	case 1: // 00001
+  case 1: // 00001
       handheld_challenge_uart();
       break;
     case 2: // 00010
@@ -144,17 +147,28 @@ void challengeSelector(int mode){
     case 9: // 01001
       handheld_challenge_side_channel_timing_attack();
       break;
-    case 17: // BUG ! Probably Hardware Changed To 17 For Stability 10001
+    case 17: // BUG ! Probably Hardware Changed To 17 For Stability 10001 (Fixed Bug in Hardware v0.20)
       handheld_challenge_side_channel_timing_attack_v2();
       break;
-    case 16: // BUG ! Probably Hardware Changed To 16 For Stability 10000
+    case 16: // BUG ! Probably Hardware Changed To 16 For Stability 10000 (Fixed Bug in Hardware v0.20)
       blackbox_chain_UART_Glitch_Attack();
       break; 
     case 12: // 01100
       blackbox_chain_UART_Timing_Attack();
       break;
+    case 18: // 10010
+      handheld_challenge_simple_power_analysis();
+      break;
+    case 19: // 10011
+      handheld_challenge_swd();
+      break;
+    case 20: // 10100
+      handheld_challenge_jtag();
+      break;
     default:
-      Serial.println("No Challenge Selected!"); // TO BE REMOVED
+      Serial.begin(9600);
+      delay(10);
+      Serial.println("No challenge was selected!");
   }
 }
 
@@ -775,3 +789,81 @@ void blackbox_chain_UART_Timing_Attack(void){
     } 
   }
 }
+
+void handheld_challenge_simple_power_analysis(void){
+  const int TRIGGER = A4;
+
+  String password = String("hacktheplanet");
+  String provided_password ;
+  char input_password[15];
+  char input_char;
+  int index;
+
+  Serial.begin(9600);
+  pinMode(TRIGGER, OUTPUT);
+  input_char = '0';
+  index = 0;
+
+  while(1){
+    digitalWrite(TRIGGER, HIGH);
+    delay(250);
+    Serial.flush();
+    Serial.println("[Enter Password To Tell You My Secret] : ");
+
+    while((input_char != '\n') && (index <14)){
+      if(Serial.available() > 0){
+        input_char = Serial.read();
+        input_password[index++] = input_char;
+      }
+    }
+
+    input_password[index] = '\0';
+    provided_password = String(input_password);
+    provided_password.trim();
+    index = 0;
+    input_char = 0;
+    
+    digitalWrite(TRIGGER, LOW);
+
+    if(provided_password == password){
+      Serial.println("TS{5P@_ar3_H4rd_Bu7_r3w0rd1n9}");
+    }
+    else{
+      delay(random(100));
+      Serial.println("[NOPE - GO AWAY!]");
+    }
+
+  }
+
+}
+
+void handheld_challenge_swd(){
+  pinMode(LED_0,INPUT);
+  Serial.begin(9600);
+  delay(3000);
+  Serial.println("[+] DOOR STATUS: LOCKED");
+  while(1){
+    if (digitalRead(LED_0) == HIGH) {
+      Serial.println("[+] DOOR STATUS: UNLOCKED");
+      Serial.println("-------------------------");
+      Serial.println("TS{5WD_15_P0werFu11_Use}");
+    }
+    delay(500);
+  }
+}
+
+void handheld_challenge_jtag(){
+  pinMode(LED_0,INPUT);
+  Serial.begin(115200);
+  delay(3000);
+  Serial.println("[+] BACKDOOR STATUS: LOCKED");
+  while(1){
+    if (digitalRead(LED_0) == HIGH) {
+      Serial.println("[+] BACKDOOR STATUS: UNLOCKED");
+      Serial.println("-------------------------");
+      Serial.println("TS{JT@G_5@YS_SWD_1m_Y0ur_F@7h3r}");
+    }
+    delay(500);
+  }
+}
+

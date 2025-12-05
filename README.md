@@ -2,8 +2,11 @@
 # PwnPad: A Hardware Hacking Learning Platform
 
 
- ![license-shield](https://img.shields.io/github/license/twelvesec/PwnPad) ![stars-shield](https://img.shields.io/github/stars/twelvesec/PwnPad) ![contributors-shield](https://img.shields.io/github/contributors/twelvesec/PwnPad) ![Static Badge](https://img.shields.io/badge/HTML5-blue) ![Static Badge](https://img.shields.io/badge/CSS3-green) ![Static Badge](https://img.shields.io/badge/JavaScript-red) ![Static Badge](https://img.shields.io/badge/Arduino-blue)
+ ![Static Badge](https://img.shields.io/badge/Black%20Hat%20Arsenal%20-Europe%202025-black) ![license-shield](https://img.shields.io/github/license/twelvesec/PwnPad) ![stars-shield](https://img.shields.io/github/stars/twelvesec/PwnPad) ![contributors-shield](https://img.shields.io/github/contributors/twelvesec/PwnPad) ![Static Badge](https://img.shields.io/badge/HTML5-blue) ![Static Badge](https://img.shields.io/badge/CSS3-green) ![Static Badge](https://img.shields.io/badge/JavaScript-red) ![Static Badge](https://img.shields.io/badge/Arduino-blue)
 
+## 📖 PwnPad Wiki
+
+Want to build your own PwnPad? The PwnPad Wiki has a thorough guide, documentation, and a step-by-step hardware hacking learning path: https://github.com/twelvesec/PwnPadWiki/wiki - it’s the best place to begin.
 
 ## 🎯 Goals
 
@@ -31,6 +34,7 @@ PwnPad aims to bridge the gap between theory and practice by offering a structur
 | `challenges/` | Learning objectives per challenge      |
 | `tools/`      | Scripts for building/flashing          |
 | `docs/`       | Miscellaneous resources                |
+| `modules`     | Modules' Gerbers & Schematics          |
 
 
 
@@ -54,6 +58,9 @@ PwnPad aims to bridge the gap between theory and practice by offering a structur
 |10|Tempo Leak|`#SideChannel` `#UART`|Leak secrets using timing variations with a twist.|
 |11|Chaos Chain: Glitchgate|`#FaultInjection` `#UART` |Combine UART and glitch attacks to break in.|
 |12|Chaos Chain: Timebomb|`#UART` `#SideChannel`|Combine UART and chain timing leaks to break in.|
+|13|Pizza Order|`#SPA` `#SideChannel`|Use a basic oscilloscope to exfiltrate the password.|
+|14|Ladybirds|`#SWD` `#Reversing` `STM32`|Use a SWD debugger and patch the memmory to access the safe.|
+|15|Ladybird I Am Your Father|`#JTAG` `#Reversing` `STM32`|Extract the firmware using JTAG and later  patch the memmory to access the safe.|
 
 ## 🚀 Getting Started
 
@@ -157,15 +164,15 @@ Let’s build awesome open-source hardware hacking content together!
 ## 🛣️ Roadmap
 
 ### 🧠 Software Enhancements
-- [ ] Introduce a Simple Power Analysis (SPA) challenge  
+- [x] Introduce a Simple Power Analysis (SPA) challenge  
 - [ ] Introduce a Differential Power Analysis (DPA) challenge  
 
 ### 🔧 Hardware Upgrades
-- [ ] Simplify the Fault Injection interface using DIP switches to disable capacitors  
-- [ ] Implement an interface for external module plug-ins  
-- [ ] Develop new add-on modules (fully backward-compatible with existing PwnPad versions):
-  - [ ] External Storage Module  
-  - [ ] BLE (Bluetooth Low Energy) Module  
+- [x] Simplify the Fault Injection interface using DIP switches to disable capacitors  
+- [x] Implement an interface for external module plug-ins  
+- [x] Develop new add-on modules (fully backward-compatible with existing PwnPad versions):
+  - [x] External Storage Module  
+  - [x] BLE (Bluetooth Low Energy) Module  
   - [ ] RF (Radio Frequency) Module
 
 ---
@@ -176,7 +183,7 @@ This project is licensed under the **GNU General Public License v3.0**. See [LIC
 ---
 
 <div align="center">
-  <img src="https://github.com/twelvesec/PwnPad/blob/main/docs/img/pwnpad-board.png?raw=true" alt="img">
+  <img src="https://github.com/twelvesec/PwnPad/blob/main/docs/img/pwnpad-board-v2.png?raw=true" alt="img">
 </div>
 
 ---
