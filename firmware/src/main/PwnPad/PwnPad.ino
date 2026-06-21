@@ -24,6 +24,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #include <SoftwareSerial.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <EEPROM.h>
 /*************************** DEFINED PINS ******************************/
 
 #define MOD1 9
@@ -68,9 +69,29 @@ void handheld_challenge_jtag(void);
 void morseMessager(String morse, int speed);
 /*******************************************************************************/ 
 
+// ===== Auto-seed EEPROM (challenge 6 "Hard Leak") =====
+// Writes the obfuscated flag to EEPROM on first boot. The flag does NOT appear in
+// clear text in the source. After an ISP chip-erase the EEPROM is rewritten
+// automatically on the next boot (marker 0xA7 at address 1023). To force a re-seed
+// after changing the flag, bump the marker value (0xA7 -> 0xA8).
+// Replaces the separate EEPROM_Setup.ino sketch and removes the EESAVE dependency.
+void initEEPROM(void){
+  if (EEPROM.read(1023) == 0xA7) return;          // already seeded -> nothing to do
+  static const uint8_t obf[] = {
+    0x0E,0xBE,0xC1,0xBE,0x29,0x7D,0x28,0xFD,0x97,0x32,
+    0x53,0x38,0xC5,0xCB,0x8F,0x23,0x05,0xCC,0xC7
+  };
+  uint8_t k = 0x5A;
+  for (uint8_t i = 0; i < sizeof(obf); i++) {
+    EEPROM.update(i, obf[i] ^ k);                 // flag at addresses 0..18
+    k = (uint8_t)(k * 31 + 7);                    // rolling de-obfuscation key
+  }
+  EEPROM.update(1023, 0xA7);                       // "EEPROM seeded" marker
+}
+
 void setup(){
+  initEEPROM();
   initialize();
-  Serial.println("------------------------"); // TO BE REMOVED
   modeReader(); //helps for steadier digitalRead for some reason
   challengeSelector(modeReader());
 }
@@ -78,7 +99,6 @@ void setup(){
 
 void loop()
 {
-  Serial.print(".");  // TO BE REMOVED
   delay(1000);
 }
 
@@ -168,7 +188,7 @@ void challengeSelector(int mode){
     default:
       Serial.begin(9600);
       delay(10);
-      Serial.println("No challenge was selected!");
+      Serial.println(F("No challenge was selected!"));
   }
 }
 
@@ -190,30 +210,30 @@ void handheld_challenge_uart(){
   digitalWrite(LED_1, LED_1_STATE);
   digitalWrite(LED_2, LED_2_STATE);
 
-  Serial.println("+=========== Welcome To The UART Challenge ===========+");
-  Serial.println("|       You Successfully Identified The Baudrate      |");
-  Serial.println("|            You Can Now Control The LEDS             |");
-  Serial.println("|                 TS{U@rt_15_@w3s0m3}                 |");
-  Serial.println("+=====================================================+\n\n");
+  Serial.println(F("+=========== Welcome To The UART Challenge ===========+"));
+  Serial.println(F("|       You Successfully Identified The Baudrate      |"));
+  Serial.println(F("|            You Can Now Control The LEDS             |"));
+  Serial.println(F("|                 TS{U@rt_15_@w3s0m3}                 |"));
+  Serial.println(F("+=====================================================+\n\n"));
 
   while(1) {
 
-    Serial.print("\nSELECT LED (1/2/3) > ");
+    Serial.print(F("\nSELECT LED (1/2/3) > "));
     while(Serial.available() <= 0){};
 
     while (Serial.available() > 0) {
       char led = Serial.read();
       Serial.println(led);
       if (led != '1' && led != '2' && led != '3'){
-        Serial.println("\nError Wrong Id !");
+        Serial.println(F("\nError Wrong Id !"));
       }
       else{
-        Serial.print("\nSELECT STATUS (0/1) > ");
-        while(Serial.available() <= 0){};   
+        Serial.print(F("\nSELECT STATUS (0/1) > "));
+        while(Serial.available() <= 0){};
         char status = Serial.read();
         Serial.println(status);
         if (status != '1' && status != '0'){
-          Serial.println("\nSomething Went Wrong!");
+          Serial.println(F("\nSomething Went Wrong!"));
           break;
         }
 
@@ -252,7 +272,7 @@ void handheld_challenge_uart_v2(){
     Serial.begin(31337);
     delay(10);
     while(1){
-      Serial.println("TS{N0w_Y0u_@r3_@n_el173_H@(k3r}");
+      Serial.println(F("TS{N0w_Y0u_@r3_@n_el173_H@(k3r}"));
       delay(2000);
     }
 }
@@ -281,13 +301,13 @@ void handheld_challenge_i2c(){
 
 
 void handheld_challenge_i2c_v2(){
-  String OTP = "TS{1_N33D_/\\/\\y_8u66y}"; 
-  Wire.begin(); 
+  const char OTP[] = "TS{1_N33D_/\\/\\y_8u66y}";   // const char[]: no String, no heap allocation
+  Wire.begin();
 
-  while(1) { 
-    Wire.beginTransmission(0x12); 
-    Wire.write(OTP.c_str());       
-    Wire.endTransmission();   
+  while(1) {
+    Wire.beginTransmission(0x12);
+    Wire.write((const uint8_t*)OTP, strlen(OTP));
+    Wire.endTransmission();
     delay(500);
   }
 }
@@ -393,7 +413,7 @@ void handheld_challenge_firmware_extraction(){
     if (digitalRead(BTN_OK) == HIGH){
       delay(10);
       if (strcmp(MorseInput , SECRET) == 0){
-        Serial.println("SECTER MODE UNLOCKED: TS{F1rmw@re_S3cret}");  
+        Serial.println(F("SECTER MODE UNLOCKED: TS{F1rmw@re_S3cret}"));
         while(true){
           digitalWrite(LED_0, HIGH);
           delay(100);
@@ -440,7 +460,7 @@ void handheld_challenge_voltage_glitch(){
   Serial.begin(9600);
   pinMode(TRIGGER, OUTPUT);
   digitalWrite(TRIGGER, LOW);
-  Serial.println("\nI will never tell you my secret !");
+  Serial.println(F("\nI will never tell you my secret !"));
 
   while(1){
     
@@ -457,13 +477,13 @@ void handheld_challenge_voltage_glitch(){
     digitalWrite(TRIGGER, LOW);
 
     if ( i != 200 || j != 200 || cnt != 40000 ){
-      Serial.println("TS{Gl1th3s_@r3_Awe50m3_!}");
-      Serial.println("---------------------");
-      Serial.print("i: ");
+      Serial.println(F("TS{Gl1th3s_@r3_Awe50m3_!}"));
+      Serial.println(F("---------------------"));
+      Serial.print(F("i: "));
       Serial.println(i);
-      Serial.print("j: ");
+      Serial.print(F("j: "));
       Serial.println(j);
-      Serial.print("cnt: ");
+      Serial.print(F("cnt: "));
       Serial.println(cnt);
       delay(60000);
     }
@@ -480,7 +500,7 @@ void handheld_challenge_voltage_glitch_v2(){
   Serial.begin(9600);
   pinMode(TRIGGER_V2, OUTPUT);
   digitalWrite(TRIGGER_V2, LOW);
-  Serial.println("\nHahaha, I changed my trigger go and find it");
+  Serial.println(F("\nHahaha, I changed my trigger go and find it"));
 
   while(1){
     
@@ -496,7 +516,7 @@ void handheld_challenge_voltage_glitch_v2(){
     digitalWrite(TRIGGER_V2, LOW);
 
     if ( i != MAX || j != MAX || cnt != 40000 ){
-      Serial.println("TS{0h_n0_y0u_foun6_my_7r1gg3r}");
+      Serial.println(F("TS{0h_n0_y0u_foun6_my_7r1gg3r}"));
     }
   }
 }
@@ -530,7 +550,7 @@ void handheld_challenge_side_channel_timing_attack(void){
 
   Serial.begin(9600);
   delay(500);
-  Serial.println ("\nYou will never enter my vault!");
+  Serial.println (F("\nYou will never enter my vault!"));
 
   while(1){
     if (digitalRead(BTN_DOT) == HIGH){
@@ -576,7 +596,7 @@ void handheld_challenge_side_channel_timing_attack(void){
       }
 
       if (flag == 0){
-        Serial.println("TS{Y0u_3nter36_th3_v@ul7}");
+        Serial.println(F("TS{Y0u_3nter36_th3_v@ul7}"));
         while(1){
           digitalWrite(LED_0, HIGH);
           delay(100);
